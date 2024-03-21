@@ -1,7 +1,9 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'login_usuario_model.dart';
@@ -123,7 +125,7 @@ class _LoginUsuarioWidgetState extends State<LoginUsuarioWidget> {
             child: Text(
               'Contraseña',
               style: FlutterFlowTheme.of(context).bodySmall.override(
-                    fontFamily: 'Playfair Display',
+                    fontFamily: 'Poppins',
                     fontSize: 18.0,
                   ),
             ),
@@ -134,7 +136,7 @@ class _LoginUsuarioWidgetState extends State<LoginUsuarioWidget> {
               controller: _model.txtPasswordController,
               focusNode: _model.txtPasswordFocusNode,
               autofocus: true,
-              obscureText: false,
+              obscureText: !_model.txtPasswordVisibility,
               decoration: InputDecoration(
                 labelStyle: FlutterFlowTheme.of(context).labelMedium,
                 hintStyle: FlutterFlowTheme.of(context).labelMedium,
@@ -166,6 +168,19 @@ class _LoginUsuarioWidgetState extends State<LoginUsuarioWidget> {
                   ),
                   borderRadius: BorderRadius.circular(8.0),
                 ),
+                suffixIcon: InkWell(
+                  onTap: () => setState(
+                    () => _model.txtPasswordVisibility =
+                        !_model.txtPasswordVisibility,
+                  ),
+                  focusNode: FocusNode(skipTraversal: true),
+                  child: Icon(
+                    _model.txtPasswordVisibility
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined,
+                    size: 22,
+                  ),
+                ),
               ),
               style: FlutterFlowTheme.of(context).bodyMedium,
               validator:
@@ -174,25 +189,89 @@ class _LoginUsuarioWidgetState extends State<LoginUsuarioWidget> {
           ),
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
-            child: Text(
-              'Recuperar contraseña',
-              style: FlutterFlowTheme.of(context).bodySmall,
+            child: InkWell(
+              splashColor: Colors.transparent,
+              focusColor: Colors.transparent,
+              hoverColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onTap: () async {
+                context.pushNamed('recuperarContra');
+              },
+              child: Text(
+                'Recuperar contraseña',
+                style: FlutterFlowTheme.of(context).bodySmall,
+              ),
             ),
           ),
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 0.0),
-            child: Text(
-              'Registrarse',
-              style: FlutterFlowTheme.of(context).bodySmall,
+            child: InkWell(
+              splashColor: Colors.transparent,
+              focusColor: Colors.transparent,
+              hoverColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onTap: () async {
+                context.pushNamed('RegistroUsuario');
+              },
+              child: Text(
+                'Registrarse',
+                style: FlutterFlowTheme.of(context).bodySmall,
+              ),
             ),
           ),
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
             child: FFButtonWidget(
-              onPressed: () {
-                print('btnIniciarSession pressed ...');
+              onPressed: () async {
+                GoRouter.of(context).prepareAuthEvent();
+
+                final user = await authManager.signInWithEmail(
+                  context,
+                  _model.txtCorreoController.text,
+                  _model.txtPasswordController.text,
+                );
+                if (user == null) {
+                  return;
+                }
+
+                context.goNamedAuth('menuPrincipal', context.mounted);
               },
-              text: 'Iniciar Session ',
+              text: 'Iniciar Sesion ',
+              options: FFButtonOptions(
+                height: 40.0,
+                padding: EdgeInsetsDirectional.fromSTEB(67.0, 0.0, 67.0, 0.0),
+                iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                color: Color(0xFFB70D33),
+                textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                      fontFamily: 'Poppins',
+                      color: Colors.white,
+                    ),
+                elevation: 3.0,
+                borderSide: BorderSide(
+                  color: Colors.transparent,
+                  width: 1.0,
+                ),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 0.0),
+            child: FFButtonWidget(
+              onPressed: () async {
+                GoRouter.of(context).prepareAuthEvent();
+                final user = await authManager.signInWithGoogle(context);
+                if (user == null) {
+                  return;
+                }
+
+                context.goNamedAuth('menuPrincipal', context.mounted);
+              },
+              text: 'Continuar con Google',
+              icon: FaIcon(
+                FontAwesomeIcons.google,
+                size: 16.0,
+              ),
               options: FFButtonOptions(
                 height: 40.0,
                 padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),

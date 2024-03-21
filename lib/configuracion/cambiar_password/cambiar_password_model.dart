@@ -1,3 +1,4 @@
+import '/configuracion/bs_cambio_password/bs_cambio_password_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';

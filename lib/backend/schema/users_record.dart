@@ -41,11 +41,6 @@ class UsersRecord extends FirestoreRecord {
   DateTime? get createdTime => _createdTime;
   bool hasCreatedTime() => _createdTime != null;
 
-  // "favorites" field.
-  List<int>? _favorites;
-  List<int> get favorites => _favorites ?? const [];
-  bool hasFavorites() => _favorites != null;
-
   // "phone_number" field.
   String? _phoneNumber;
   String get phoneNumber => _phoneNumber ?? '';
@@ -57,7 +52,6 @@ class UsersRecord extends FirestoreRecord {
     _photoUrl = snapshotData['photo_url'] as String?;
     _uid = snapshotData['uid'] as String?;
     _createdTime = snapshotData['created_time'] as DateTime?;
-    _favorites = getDataList(snapshotData['favorites']);
     _phoneNumber = snapshotData['phone_number'] as String?;
   }
 
@@ -121,13 +115,11 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
 
   @override
   bool equals(UsersRecord? e1, UsersRecord? e2) {
-    const listEquality = ListEquality();
     return e1?.email == e2?.email &&
         e1?.displayName == e2?.displayName &&
         e1?.photoUrl == e2?.photoUrl &&
         e1?.uid == e2?.uid &&
         e1?.createdTime == e2?.createdTime &&
-        listEquality.equals(e1?.favorites, e2?.favorites) &&
         e1?.phoneNumber == e2?.phoneNumber;
   }
 
@@ -138,7 +130,6 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.photoUrl,
         e?.uid,
         e?.createdTime,
-        e?.favorites,
         e?.phoneNumber
       ]);
 

@@ -1,8 +1,10 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
+import '/components/bs_registro_exitoso_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'registro_usuario_model.dart';
@@ -33,6 +35,9 @@ class _RegistroUsuarioWidgetState extends State<RegistroUsuarioWidget> {
 
     _model.txtPasswordController ??= TextEditingController();
     _model.txtPasswordFocusNode ??= FocusNode();
+
+    _model.txtVerficarController ??= TextEditingController();
+    _model.txtVerficarFocusNode ??= FocusNode();
   }
 
   @override
@@ -68,18 +73,15 @@ class _RegistroUsuarioWidgetState extends State<RegistroUsuarioWidget> {
               ),
             ],
           ),
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
-            child: Text(
-              'Nombre de usuario',
-              style: FlutterFlowTheme.of(context).bodySmall.override(
-                    fontFamily: 'Poppins',
-                    fontSize: 18.0,
-                  ),
-            ),
+          Text(
+            'Nombre ',
+            style: FlutterFlowTheme.of(context).bodySmall.override(
+                  fontFamily: 'Poppins',
+                  fontSize: 18.0,
+                ),
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(8.0, 15.0, 8.0, 0.0),
+            padding: EdgeInsetsDirectional.fromSTEB(8.0, 1.0, 8.0, 0.0),
             child: TextFormField(
               controller: _model.txtNombreUsuarioController,
               focusNode: _model.txtNombreUsuarioFocusNode,
@@ -133,7 +135,7 @@ class _RegistroUsuarioWidgetState extends State<RegistroUsuarioWidget> {
             ),
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(8.0, 15.0, 8.0, 0.0),
+            padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 8.0, 0.0),
             child: TextFormField(
               controller: _model.txtCorreoController,
               focusNode: _model.txtCorreoFocusNode,
@@ -187,12 +189,12 @@ class _RegistroUsuarioWidgetState extends State<RegistroUsuarioWidget> {
             ),
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(8.0, 15.0, 8.0, 0.0),
+            padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 8.0, 0.0),
             child: TextFormField(
               controller: _model.txtPasswordController,
               focusNode: _model.txtPasswordFocusNode,
               autofocus: true,
-              obscureText: false,
+              obscureText: !_model.txtPasswordVisibility,
               decoration: InputDecoration(
                 labelStyle: FlutterFlowTheme.of(context).labelMedium,
                 hintStyle: FlutterFlowTheme.of(context).labelMedium,
@@ -224,6 +226,19 @@ class _RegistroUsuarioWidgetState extends State<RegistroUsuarioWidget> {
                   ),
                   borderRadius: BorderRadius.circular(8.0),
                 ),
+                suffixIcon: InkWell(
+                  onTap: () => setState(
+                    () => _model.txtPasswordVisibility =
+                        !_model.txtPasswordVisibility,
+                  ),
+                  focusNode: FocusNode(skipTraversal: true),
+                  child: Icon(
+                    _model.txtPasswordVisibility
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined,
+                    size: 22,
+                  ),
+                ),
               ),
               style: FlutterFlowTheme.of(context).bodyMedium,
               validator:
@@ -231,10 +246,121 @@ class _RegistroUsuarioWidgetState extends State<RegistroUsuarioWidget> {
             ),
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 40.0, 0.0, 0.0),
+            padding: EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 0.0),
+            child: Text(
+              'Verificar Contraseña',
+              style: FlutterFlowTheme.of(context).bodySmall.override(
+                    fontFamily: 'Poppins',
+                    fontSize: 18.0,
+                  ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 8.0, 0.0),
+            child: TextFormField(
+              controller: _model.txtVerficarController,
+              focusNode: _model.txtVerficarFocusNode,
+              autofocus: true,
+              obscureText: !_model.txtVerficarVisibility,
+              decoration: InputDecoration(
+                labelStyle: FlutterFlowTheme.of(context).labelMedium,
+                hintStyle: FlutterFlowTheme.of(context).labelMedium,
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: FlutterFlowTheme.of(context).alternate,
+                    width: 2.0,
+                  ),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: FlutterFlowTheme.of(context).primary,
+                    width: 2.0,
+                  ),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                errorBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: FlutterFlowTheme.of(context).error,
+                    width: 2.0,
+                  ),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                focusedErrorBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: FlutterFlowTheme.of(context).error,
+                    width: 2.0,
+                  ),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                suffixIcon: InkWell(
+                  onTap: () => setState(
+                    () => _model.txtVerficarVisibility =
+                        !_model.txtVerficarVisibility,
+                  ),
+                  focusNode: FocusNode(skipTraversal: true),
+                  child: Icon(
+                    _model.txtVerficarVisibility
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined,
+                    size: 22,
+                  ),
+                ),
+              ),
+              style: FlutterFlowTheme.of(context).bodyMedium,
+              validator:
+                  _model.txtVerficarControllerValidator.asValidator(context),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
             child: FFButtonWidget(
-              onPressed: () {
-                print('btnRegistro pressed ...');
+              onPressed: () async {
+                GoRouter.of(context).prepareAuthEvent();
+                if (_model.txtPasswordController.text !=
+                    _model.txtVerficarController.text) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        'Passwords don\'t match!',
+                      ),
+                    ),
+                  );
+                  return;
+                }
+
+                final user = await authManager.createAccountWithEmail(
+                  context,
+                  _model.txtCorreoController.text,
+                  _model.txtPasswordController.text,
+                );
+                if (user == null) {
+                  return;
+                }
+
+                await UsersRecord.collection
+                    .doc(user.uid)
+                    .update(createUsersRecordData(
+                      displayName: _model.txtNombreUsuarioController.text,
+                    ));
+
+                await showModalBottomSheet(
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  enableDrag: false,
+                  context: context,
+                  builder: (context) {
+                    return Padding(
+                      padding: MediaQuery.viewInsetsOf(context),
+                      child: Container(
+                        height: MediaQuery.sizeOf(context).height * 0.4,
+                        child: BsRegistroExitosoWidget(),
+                      ),
+                    );
+                  },
+                ).then((value) => safeSetState(() {}));
+
+                context.pushNamedAuth('LoginUsuario', context.mounted);
               },
               text: 'Registrarse',
               options: FFButtonOptions(
@@ -251,29 +377,20 @@ class _RegistroUsuarioWidgetState extends State<RegistroUsuarioWidget> {
                   color: Colors.transparent,
                   width: 1.0,
                 ),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20.0),
-                  bottomRight: Radius.circular(20.0),
-                  topLeft: Radius.circular(20.0),
-                  topRight: Radius.circular(20.0),
-                ),
+                borderRadius: BorderRadius.circular(8.0),
               ),
             ),
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+            padding: EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 0.0),
             child: FFButtonWidget(
-              onPressed: () {
-                print('btnRegistroGoogle pressed ...');
+              onPressed: () async {
+                context.pushNamed('LoginUsuario');
               },
-              text: 'Continuar con Google',
-              icon: FaIcon(
-                FontAwesomeIcons.google,
-                size: 16.0,
-              ),
+              text: 'Regresar',
               options: FFButtonOptions(
                 height: 40.0,
-                padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(88.0, 0.0, 88.0, 0.0),
                 iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                 color: Color(0xFFB70D33),
                 textStyle: FlutterFlowTheme.of(context).titleSmall.override(
@@ -285,12 +402,7 @@ class _RegistroUsuarioWidgetState extends State<RegistroUsuarioWidget> {
                   color: Colors.transparent,
                   width: 1.0,
                 ),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20.0),
-                  bottomRight: Radius.circular(20.0),
-                  topLeft: Radius.circular(20.0),
-                  topRight: Radius.circular(20.0),
-                ),
+                borderRadius: BorderRadius.circular(8.0),
               ),
             ),
           ),

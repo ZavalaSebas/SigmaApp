@@ -90,16 +90,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               : LoginUsuarioWidget(),
         ),
         FFRoute(
-          name: 'LoginPage',
-          path: '/loginPage',
-          builder: (context, params) => LoginPageWidget(),
-        ),
-        FFRoute(
-          name: 'CreateAccountPage',
-          path: '/createAccountPage',
-          builder: (context, params) => CreateAccountPageWidget(),
-        ),
-        FFRoute(
           name: 'menuPrincipal',
           path: '/menuPrincipal',
           builder: (context, params) => MenuPrincipalWidget(),

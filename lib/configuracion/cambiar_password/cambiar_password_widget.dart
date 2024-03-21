@@ -1,3 +1,4 @@
+import '/configuracion/bs_cambio_password/bs_cambio_password_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -246,8 +247,28 @@ class _CambiarPasswordWidgetState extends State<CambiarPasswordWidget> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 0.0),
                 child: FFButtonWidget(
-                  onPressed: () {
-                    print('btnCambiarPass pressed ...');
+                  onPressed: () async {
+                    await showModalBottomSheet(
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      enableDrag: false,
+                      context: context,
+                      builder: (context) {
+                        return GestureDetector(
+                          onTap: () => _model.unfocusNode.canRequestFocus
+                              ? FocusScope.of(context)
+                                  .requestFocus(_model.unfocusNode)
+                              : FocusScope.of(context).unfocus(),
+                          child: Padding(
+                            padding: MediaQuery.viewInsetsOf(context),
+                            child: Container(
+                              height: MediaQuery.sizeOf(context).height * 0.4,
+                              child: BsCambioPasswordWidget(),
+                            ),
+                          ),
+                        );
+                      },
+                    ).then((value) => safeSetState(() {}));
                   },
                   text: 'Cambiar password',
                   options: FFButtonOptions(

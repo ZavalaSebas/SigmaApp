@@ -1,3 +1,5 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/components/bs_recuperar_pass_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -78,12 +80,12 @@ class _RecuperarContraWidgetState extends State<RecuperarContraWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               20.0, 50.0, 20.0, 50.0),
                           child: Text(
-                            'Por favor ingrese el correo con el cual se registro para recuperar su password',
+                            'Por favor ingrese el correo con el cual se registro para recuperar su password.',
                             textAlign: TextAlign.center,
                             style: FlutterFlowTheme.of(context)
                                 .titleMedium
                                 .override(
-                                  fontFamily: 'Playfair Display',
+                                  fontFamily: 'Poppins',
                                   fontSize: 20.0,
                                 ),
                           ),
@@ -149,8 +151,44 @@ class _RecuperarContraWidgetState extends State<RecuperarContraWidget> {
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
                   child: FFButtonWidget(
-                    onPressed: () {
-                      print('btnRecuperarPass pressed ...');
+                    onPressed: () async {
+                      if (_model.txtRecuperarPassController.text.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Email required!',
+                            ),
+                          ),
+                        );
+                        return;
+                      }
+                      await authManager.resetPassword(
+                        email: _model.txtRecuperarPassController.text,
+                        context: context,
+                      );
+                      await showModalBottomSheet(
+                        isScrollControlled: true,
+                        backgroundColor: Colors.transparent,
+                        enableDrag: false,
+                        context: context,
+                        builder: (context) {
+                          return GestureDetector(
+                            onTap: () => _model.unfocusNode.canRequestFocus
+                                ? FocusScope.of(context)
+                                    .requestFocus(_model.unfocusNode)
+                                : FocusScope.of(context).unfocus(),
+                            child: Padding(
+                              padding: MediaQuery.viewInsetsOf(context),
+                              child: Container(
+                                height: MediaQuery.sizeOf(context).height * 0.4,
+                                child: BsRecuperarPassWidget(),
+                              ),
+                            ),
+                          );
+                        },
+                      ).then((value) => safeSetState(() {}));
+
+                      context.pushNamed('LoginUsuario');
                     },
                     text: 'Recuperar password',
                     options: FFButtonOptions(
@@ -172,6 +210,40 @@ class _RecuperarContraWidgetState extends State<RecuperarContraWidget> {
                       ),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 0.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FFButtonWidget(
+                        onPressed: () async {
+                          context.pushNamed('LoginUsuario');
+                        },
+                        text: 'Regresar',
+                        options: FFButtonOptions(
+                          height: 40.0,
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              72.0, 0.0, 72.0, 0.0),
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          color: Color(0xFFB70D33),
+                          textStyle:
+                              FlutterFlowTheme.of(context).titleSmall.override(
+                                    fontFamily: 'Poppins',
+                                    color: Colors.white,
+                                  ),
+                          elevation: 3.0,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

@@ -1,20 +1,21 @@
-import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/auth/firebase_auth/auth_util.dart';
+import '/components/bs_recuperar_pass_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'menu_principal_widget.dart' show MenuPrincipalWidget;
+import 'recuperar_contra_widget.dart' show RecuperarContraWidget;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class MenuPrincipalModel extends FlutterFlowModel<MenuPrincipalWidget> {
+class RecuperarContraModel extends FlutterFlowModel<RecuperarContraWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode;
-  TextEditingController? textController;
-  String? Function(BuildContext, String?)? textControllerValidator;
+  // State field(s) for txtRecuperarPass widget.
+  FocusNode? txtRecuperarPassFocusNode;
+  TextEditingController? txtRecuperarPassController;
+  String? Function(BuildContext, String?)? txtRecuperarPassControllerValidator;
 
   /// Initialization and disposal methods.
 
@@ -24,8 +25,8 @@ class MenuPrincipalModel extends FlutterFlowModel<MenuPrincipalWidget> {
   @override
   void dispose() {
     unfocusNode.dispose();
-    textFieldFocusNode?.dispose();
-    textController?.dispose();
+    txtRecuperarPassFocusNode?.dispose();
+    txtRecuperarPassController?.dispose();
   }
 
   /// Action blocks are added here.

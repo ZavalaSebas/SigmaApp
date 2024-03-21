@@ -18,10 +18,10 @@
   },
   "scripts": {
     "lint": "./node_modules/.bin/eslint --max-warnings=0 .",
-    "serve": "firebase -P fluttermet emulators:start --only functions",
-    "shell": "firebase -P fluttermet functions:shell",
+    "serve": "firebase -P sigma-apps-yly44m emulators:start --only functions",
+    "shell": "firebase -P sigma-apps-yly44m functions:shell",
     "start": "npm run shell",
-    "logs": "firebase -P fluttermet functions:log",
+    "logs": "firebase -P sigma-apps-yly44m functions:log",
     "compile": "cp ../../tsconfig.template.json ./tsconfig-compile.json && tsc --project tsconfig-compile.json"
   },
   "engines": {

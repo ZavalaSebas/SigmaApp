@@ -5,13 +5,12 @@ Future initFirebase() async {
   if (kIsWeb) {
     await Firebase.initializeApp(
         options: FirebaseOptions(
-            apiKey: "AIzaSyDeKvFaRds3fQcoEm1RDwsH5GZ7CY0mf0U",
-            authDomain: "fluttermet.firebaseapp.com",
-            projectId: "fluttermet",
-            storageBucket: "fluttermet.appspot.com",
-            messagingSenderId: "996585139099",
-            appId: "1:996585139099:web:ad7c87ecad572a1952cf3e",
-            measurementId: "G-JZDGFTGEXZ"));
+            apiKey: "AIzaSyC0thHHtzIShYXYwmcR_hAFIzv3iGc-zAc",
+            authDomain: "sigma-apps-yly44m.firebaseapp.com",
+            projectId: "sigma-apps-yly44m",
+            storageBucket: "sigma-apps-yly44m.appspot.com",
+            messagingSenderId: "271346977177",
+            appId: "1:271346977177:web:6be526fbdc34bd27b7eb08"));
   } else {
     await Firebase.initializeApp();
   }
